@@ -68,7 +68,7 @@ const rollDice = () => {
 
   // display corresponding dice image
   diceEl.classList.remove("hidden");
-  diceEl.src = `dice-${diceValue}.png`;
+  diceEl.src = `img/dice-${diceValue}.png`;
 
   // ------- HANDLE PLAYER SCORES AND TURNS -----
   // reset score and change turns if dice yields 1
