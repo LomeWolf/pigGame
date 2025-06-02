@@ -33,15 +33,22 @@ const resetGame = () => {
 };
 // reset score and switch player turns
 
-let activePlayer = () => {
-  if (
-    player0.playerEl.classList.contains("player--active") ||
-    player1.playerEl.classList.contains("player--active")
-  ) {
-  }
+// Check for active player, Return the player object
+const getActivePlayer = () => {
+  if (player0.playerEl.classList.contains("player--active")) return player0;
+  if (player1.playerEl.classList.contains("player--active")) return player1;
+  return null;
 };
+// Check for inactive player, Return the player object
+const getInactivePlayer = () => {
+  if (!player0.playerEl.classList.contains("player--active")) return player0;
+  if (!player1.playerEl.classList.contains("player--active")) return player1;
+  return null;
+};
+
 // retrieve the number from the class name attached to the current active--player
 
+/*
 const swapActivePlayer = (activatePlayer, deactivatePlayer) => {
   if (deactivatePlayer.playerEl.classList.contains("player--active")) {
     // set "deactivated" player as inactive
@@ -52,6 +59,20 @@ const swapActivePlayer = (activatePlayer, deactivatePlayer) => {
     deactivatePlayer.score = 0;
     deactivatePlayer.scoreEl.textContent = deactivatePlayer.score;
   }
+}; 
+*/
+
+const swapActivePlayer = () => {
+  // Remove "player--active" class from active player element
+  // Add "player--active" class to active player element
+  // Reset scores in player object and html element
+  let activePl = getActivePlayer();
+  let inactivePl = getInactivePlayer();
+
+  activePl.playerEl.classList.remove("player--active");
+  activePl.score = 0;
+  activePl.scoreEl.textContent = 0;
+  inactivePl.playerEl.classList.add("player--active");
 };
 
 //reset game and scores before starting
@@ -77,12 +98,14 @@ const rollDice = () => {
     diceValue === 1 &&
     player0.playerEl.classList.contains("player--active")
   ) {
-    swapActivePlayer(player1, player0);
+    // swapActivePlayer(player1, player0);
+    swapActivePlayer();
   } else if (
     diceValue === 1 &&
     player1.playerEl.classList.contains("player--active")
   ) {
-    swapActivePlayer(player0, player1);
+    // swapActivePlayer(player0, player1);
+    swapActivePlayer();
   } else if (
     diceValue > 1 &&
     player0.playerEl.classList.contains("player--active")
@@ -103,7 +126,8 @@ const holdScore = () => {
     // add score to tally then swap player
     player0.totalScore += player0.score;
     player0.totalScoreEl.textContent = player0.totalScore;
-    swapActivePlayer(player1, player0);
+    // swapActivePlayer(player1, player0);
+    swapActivePlayer();
 
     // check if game is won
     if (player0.totalScore >= 100) {
@@ -116,7 +140,8 @@ const holdScore = () => {
     player1.totalScore += player1.score;
     player1.totalScoreEl.textContent = player1.totalScore;
     // switch turns
-    swapActivePlayer(player0, player1);
+    // swapActivePlayer(player0, player1);
+    swapActivePlayer();
 
     // game-won functionality
     if (player1.totalScore >= 100) {
