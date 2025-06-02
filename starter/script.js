@@ -87,14 +87,16 @@ const rollDice = () => {
   // generate random dice value
   let diceValue = Math.trunc(Math.random() * 6) + 1;
 
+  // Set active player
+  const activePlayer = getActivePlayer();
+
   // display corresponding dice image
   diceEl.classList.remove("hidden");
   diceEl.src = `img/dice-${diceValue}.png`;
 
   // ------- HANDLE PLAYER SCORES AND TURNS -----
   // reset score and change turns if dice yields 1
-
-  if (
+  /*if (
     diceValue === 1 &&
     player0.playerEl.classList.contains("player--active")
   ) {
@@ -118,6 +120,12 @@ const rollDice = () => {
   ) {
     player1.score += diceValue;
     player1.scoreEl.textContent = player1.score;
+  }*/
+  if (diceValue === 1) {
+    swapActivePlayer();
+  } else if (diceValue > 1) {
+    activePlayer.score += diceValue;
+    activePlayer.scoreEl.textContent = activePlayer.score;
   }
 };
 
